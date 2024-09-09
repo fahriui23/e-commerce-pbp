@@ -113,40 +113,15 @@ dibawah merupakan step-by-step pengerjaan proyek
 
 ## Request client ke web aplikasi berbasis Django
 
-+----------------------+
-|      Client (User)    |
-+----------------------+
-           |
-           | 1. Sends Request
-           V
-+----------------------+           +----------------------+
-|     Request URL      | --------> |       urls.py        |
-+----------------------+           +----------------------+
-                                           |
-                                           | 2. Maps to view
-                                           V
-                                 +----------------------+
-                                 |      views.py        |
-                                 +----------------------+
-                                           |
-                                           | 3. (Optional) Interacts with model
-                                           V
-                                 +----------------------+
-                                 |      models.py       |
-                                 +----------------------+
-                                           |
-                                           | 4. Returns data to the view
-                                           V
-                                 +----------------------+
-                                 |   HTML Template      |
-                                 +----------------------+
-                                           |
-                                           | 5. Render the response
-                                           V
-+----------------------+           +----------------------+
-|   Client (Response)  | <-------- |      Response        |
-+----------------------+           +----------------------+
-
+```mermaid
+graph TD
+    A[Client (User)] -->|1. Sends Request| B[Request URL]
+    B -->|2. Maps to view| C[urls.py]
+    C -->|3. (Optional) Interacts with model| D[views.py]
+    D -->|4. Returns data to the view| E[models.py]
+    E -->|5. Render the response| F[HTML Template]
+    F -->|6. Sends response| G[Client (Response)]
+```
 
 ## Fungsi `git` dalam pengembangan perangkat lunak
 
