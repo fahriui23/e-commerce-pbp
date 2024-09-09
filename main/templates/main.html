@@ -21,11 +21,12 @@
         
         .info-container {
             background-color: #fff;
-            padding: 20px;
+            padding: 10px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: left;
             width: 300px;
+            margin-bottom: 20px;
         }
         
         .info-item {
@@ -51,17 +52,32 @@
 <body>
     <h1>Wanda Beras</h1>
     <div class="info-container">
-        <div class="info-item">
-            <h5>NPM: </h5>
-            <p>{{ npm }}</p>
-        </div>
-        <div class="info-item">
-            <h5>Name: </h5>
+        <div>
+            <h5> Nama: </h5>
             <p>{{ name }}</p>
         </div>
-        <div class="info-item">
-            <h5>Class: </h5>
+        <div>
+            <h5> NPM: </h5>
+            <p>{{ npm }}</p>
+        </div>
+        <div>
+            <h5>Kelas: </h5>
             <p>{{ class }}</p>
+        </div>
+    </div>
+
+    <div class="info-container">
+        <div class="info-item">
+            <h5>Product: </h5>
+            <p>{{ product }}</p>
+        </div>
+        <div class="info-item">
+            <h5>Price: </h5>
+            <p>{{ price }}</p>
+        </div>
+        <div class="info-item">
+            <h5>Description: </h5>
+            <p>{{ description }}</p>
         </div>
     </div>
 </body>
