@@ -113,15 +113,44 @@ dibawah merupakan step-by-step pengerjaan proyek
 
 ## Request client ke web aplikasi berbasis Django
 
-```mermaid
-graph TD
-    A[Client (User)] -->|1. Sends Request| B[Request URL]
-    B -->|2. Maps to view| C[urls.py]
-    C -->|3. (Optional) Interacts with model| D[views.py]
-    D -->|4. Returns data to the view| E[models.py]
-    E -->|5. Render the response| F[HTML Template]
-    F -->|6. Sends response| G[Client (Response)]
-```
+Client (User)
+    |
+    | 1. Sends Request
+    V
++----------------------+
+|     Request URL      |
++----------------------+
+           |
+           | 2. Maps to view
+           V
++----------------------+
+|       urls.py        |
++----------------------+
+           |
+           | 3. (Optional) Interacts with model
+           V
++----------------------+
+|      views.py        |
++----------------------+
+           |
+           | 4. Returns data to the view
+           V
++----------------------+
+|      models.py       |
++----------------------+
+           |
+           | 5. Render the response
+           V
++----------------------+
+|   HTML Template      |
++----------------------+
+           |
+           | 6. Sends response
+           V
++----------------------+
+|   Client (Response)  |
++----------------------+
+
 
 ## Fungsi `git` dalam pengembangan perangkat lunak
 
