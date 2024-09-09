@@ -113,43 +113,43 @@ dibawah merupakan step-by-step pengerjaan proyek
 
 ## Request client ke web aplikasi berbasis Django
 
-Client (User)
-    |
-    | 1. Sends Request
-    V
-+----------------------+
-|     Request URL      |
-+----------------------+
-           |
-           | 2. Maps to view
-           V
-+----------------------+
-|       urls.py        |
-+----------------------+
-           |
-           | 3. (Optional) Interacts with model
-           V
-+----------------------+
-|      views.py        |
-+----------------------+
-           |
-           | 4. Returns data to the view
-           V
-+----------------------+
-|      models.py       |
-+----------------------+
-           |
-           | 5. Render the response
-           V
-+----------------------+
-|   HTML Template      |
-+----------------------+
-           |
-           | 6. Sends response
-           V
-+----------------------+
-|   Client (Response)  |
-+----------------------+
+Client (User)<br />
+    |<br />
+    | 1. Sends Request<br />
+    V<br />
++----------------------+<br />
+|     Request URL      |<br />
++----------------------+<br />
+           |<br />
+           | 2. Maps to view<br />
+           V<br />
++----------------------+<br />
+|       urls.py        |<br />
++----------------------+<br />
+           |<br />
+           | 3. (Optional) Interacts with model<br />
+           V<br />
++----------------------+<br />
+|      views.py        |<br />
++----------------------+<br />
+           |<br />
+           | 4. Returns data to the view<br />
+           V<br />
++----------------------+<br />
+|      models.py       |<br />
++----------------------+<br />
+           |<br />
+           | 5. Render the response<br />
+           V<br />
++----------------------+<br />
+|   HTML Template      |<br />
++----------------------+<br />
+           |<br />
+           | 6. Sends response<br />
+           V<br />
++----------------------+<br />
+|   Client (Response)  |<br />
++----------------------+<br />
 
 
 ## Fungsi `git` dalam pengembangan perangkat lunak
