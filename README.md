@@ -1,7 +1,7 @@
 # Tugas 2 PBP - Trias Fahri Naufal
 
 Markdown ini dibuat untuk memenuhi Tugas 2 PBP dengan nama aplikasi "Wanda Beras". <br />
-Link Deployment PWS : 
+Link Deployment PWS : http://trias-fahri-wandaberas.pbp.cs.ui.ac.id
 
 ## Step pengerjaan proyek
 
