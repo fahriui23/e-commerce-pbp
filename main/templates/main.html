@@ -46,8 +46,70 @@
             color: #555;
             padding-left: 10px;
             border-left: 3px solid #007BFF;
+            
         }
-        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 10px;
+            background-color: #fff;
+            border: 1px solid #transparent;
+            margin: 0 auto;
+            opacity: ;
+            font-size: 1.2em;
+            font-family: Arial;
+        }
+
+        .table-container {
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            justify-content: center;
+            width: 90%;
+            margin-bottom: 20px;
+        }
+        table thead tr {
+            border-bottom: 3px solid #007BFF;
+            background-color: #;
+            color: #;
+            text-align: center;
+            font-weight: bold;
+            border-radius: 10px;
+            radius: 10px;
+
+        }
+        table td {
+            background-color: #transparent;
+            padding: 12px 15px;
+            border-radius: 10px;
+            radius: 10px;
+        }
+    
+        table tbody tr {
+            border-bottom: 1px solid #transparent;
+            border-radius: 10px;
+            radius: 10px;
+        }
+    
+        table tbody tr:nth-of-type(even) {
+            background-color: #transparent;
+            border-radius: 10px;
+            radius: 10px;
+        }
+    
+        table tbody tr:last-of-type {
+            border-bottom: 2px solid #transparent;
+            border-radius: 10px;
+            radius: 10px;
+        }
+    
+        table tbody tr:hover {
+            background-color: #transparent;
+            border-radius: 10px;
+            radius: 10px;
+        }   
     </style>    
 
 </head>
@@ -74,32 +136,30 @@
 {% if not products %}
 <p>Belum ada barang di Wanda Beras, coba cek toko sebelah.</p>
 {% else %}
-<table>
-    <tr>
-        <th>Product</th>
-        <th>Price</th>
-        <th>Description</th>
-    </tr>
-
-    {% for product in products %}
-
-    <div class="info-container">
-        <div class="info-item">
-            <h5>Product: </h5>
-            <p>{{ product.name }}</p>
-        </div>
-        <div class="info-item">
-            <h5>Price: </h5>
-            <p>{{product.price}}</p>
-        </div>
-        <div class="info-item">
-            <h5>Description: </h5>
-            <p>{{ product.description }}</p>
-        </div>
-    </div>
-
-    {% endfor %}
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <p>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>{{ product.description }}</td>
+                </p>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
+</div>
+
+
     {% endif %}
 
     <br />
