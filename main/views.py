@@ -1,14 +1,27 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect   
+from main.forms import ProductForm
+from main.models import Product
+
 
 def show_main(request):
+    products = Product.objects.all()
+    
     context = {
         'npm' : '2306212096',
         'name': 'Trias Fahri Naufal',
         'class': 'PBP B',
 
-        'product': 'Beras Pandan Wangi',
-        'price': '12000',
-        'description': 'Beras Pandan Wangi adalah beras yang memiliki aroma pandan yang harum dan khas. Beras ini cocok untuk dijadikan nasi putih hangat yang lezat.',
+        'products': products
     }
 
     return render(request, "main.html", context)
+
+def create_product(request):
+    form = ProductForm(request.POST or None)
+
+    if form.is_valid() and request.method == "POST":
+        form.save()
+        return redirect('main:show_main')
+
+    context = {'form': form}
+    return render(request, "create_product.html", context)

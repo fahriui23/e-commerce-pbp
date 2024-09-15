@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
 <!DOCTYPE html>
 <head>
     <title>Wanda Beras</title>
@@ -66,18 +68,44 @@
         </div>
     </div>
 
+
+</body>
+
+{% if not products %}
+<p>Belum ada barang di Wanda Beras, coba cek toko sebelah.</p>
+{% else %}
+<table>
+    <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Description</th>
+    </tr>
+
+    {% for product in products %}
+
     <div class="info-container">
         <div class="info-item">
             <h5>Product: </h5>
-            <p>{{ product }}</p>
+            <p>{{ product.name }}</p>
         </div>
         <div class="info-item">
             <h5>Price: </h5>
-            <p>{{ price }}</p>
+            <p>{{product.price}}</p>
         </div>
         <div class="info-item">
             <h5>Description: </h5>
-            <p>{{ description }}</p>
+            <p>{{ product.description }}</p>
         </div>
     </div>
-</body>
+
+    {% endfor %}
+    </table>
+    {% endif %}
+
+    <br />
+
+    <a href="{% url 'main:create_product' %}">
+    <button>Add New Product</button>
+    </a>
+    {% endblock content %}
+
