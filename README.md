@@ -176,3 +176,96 @@ Sekian jawaban saya :) . <br />
 Salam <br/>
 
 Trias Fahri Naufal 
+
+# Tugas 3 PBP - Trias Fahri Naufal
+
+1. Mengapa kita membutuhkan Data Delivery? 
+
+Data delivery diperlukan dalam suatu platform karena sebuah platform sering harus menyediakan informasi kepada user secara aman dan efisien.
+Data Delivery menjadi penting karena kebutuhan pertukaran informasi, keamanan, dan juga efisiensi.
+
+2. Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?
+
+Menurut saya pribadi JSON lebih readable bagi manusia.
+Hal tersebut menjadi salah satu dari beberapa alasan yang menjadikan JSON lebih terkenal dari XML, beberapa alasan lainnya adalah karena JSON lebih mudah di-parsing, memiliki struktur data yang lebih sederhana, dan juga lebih ringan. 
+
+3. Jelaskan fungsi dari method is_valid() pada form Django dan mengapa kita membutuhkan method tersebut?
+
+Method is_valid() berguna untuk memvalidasi data dan juga error handling. Method ini juga berfunsgi untuk menjadi filter bagi data yang masuk, dengan memastikan bahwa hanya data yang sudah bersih yang akan masuk ke database.
+
+4. Mengapa kita membutuhkan csrf_token saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan csrf_token pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?
+
+csrf_token memastikan bahwa form yang dikirimkan oleh pengguna merupakan benar-benar dari pengguna. Token ini unik untuk setiap sesi dan setiap request, sehingga kriminal siber tidak dapat menggunakan form yang sah untuk tindakan yang tidak intended oleh pengguna aslinya.
+
+Tanpa csrf_token, platform akan rentan terhadap serangan csrf (Cross-Site Request Forgery), yaitu serangan dengan membuat end user execute suatu aksi yang tidak diinginkan secara paksa (seperti transaksi bank).
+
+Penyerang dapat membuat page yang mengirimkan permintaan POST ke platform yang telah diautentikasi oleh user. Karena tidak ada csrf token untuk memverifikasi permintaan, platform akan menganggap permintaan itu sah.
+
+## Step Pengerjaan
+### Membuat Form Input Data
+1. Membuat file forms.py di direktori main, dan mengisi dengan class Product, beserta field yang akan diminta pada form
+
+```
+from django.forms import ModelForm
+from main.models import Product
+
+class ProductForm(ModelForm):
+    class Meta:
+        model = Product
+        fields = ["name", "price", "description"] #field yang akan diminta
+```
+2. Membuat view untuk handling form input pengguna dan menyimpan ke database
+3. Buat template HTML untuk membuat form (ada di create_product.html)
+
+### Menambahkan 4 fungsi views baru untuk melihat objek yang sudah ditambahkan dalam format XML, JSON, XML by ID, dan JSON by ID.
+
+1. Menambahkan method untuk setiap fungsi views yang akan dibuat. Fungsi tersebut disupport dengan pertama melakukan import terhadap HttpResponse dan serializers
+
+```
+#main/views.py
+from django.http import HttpResponse
+from django.core import serializers
+...
+
+
+def show_json(request):
+    data = Product.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+def show_xml(request):
+    data = Product.objects.all()
+    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+```
+
+
+2. Langkas diatas berupa fungsi pada views.py yang berguna untuk melihat objek dalam format XML dan JSON
+3. Untuk melihat objek dalam format XML dan JSON by ID, kita dapat membuat method baru yang menerima parameter id juga
+
+```
+#main/views.py
+
+...
+def show_xml_by_id(request, id):
+    data = Product.objects.filter(pk=id)
+    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+
+def show_json_by_id(request, id):
+    data = Product.objects.filter(pk=id)
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+...
+
+```
+Dengan menggunakan parameter id kita dapat meilihat per objek by idnya masing masing
+
+### Membuat routing URL untuk masing-masing views yang telah ditambahkan pada poin 2
+Pada file urls.py, tambahkan routing url untuk setiap method dalam views.py
+
+```
+    ...
+    path('create-product', create_product, name='create_product'),
+    path('xml/', show_xml, name='show_xml'),
+    path('json/', show_json, name='show_json'),
+    path('xml/<str:id>', show_xml_by_id, name='show_xml_by_id'),
+    path('json/<str:id>', show_json_by_id, name='show_json_by_id'),
+    ...
+```
