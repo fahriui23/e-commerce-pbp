@@ -269,3 +269,8 @@ Pada file urls.py, tambahkan routing url untuk setiap method dalam views.py
     path('json/<str:id>', show_json_by_id, name='show_json_by_id'),
     ...
 ```
+<img width="1512" alt="Screenshot 2024-09-17 at 00 02 48" src="https://github.com/user-attachments/assets/2aa254d3-33f5-4f2f-80e2-a5f0a236fe23">
+<img width="1512" alt="Screenshot 2024-09-17 at 00 03 01" src="https://github.com/user-attachments/assets/e894e872-5d01-40cf-ae60-edc025e7c32d">
+<img width="1512" alt="Screenshot 2024-09-17 at 00 03 15" src="https://github.com/user-attachments/assets/e8d04f1c-d5d2-4518-b064-0f1ac73e8ab1">
+<img width="1512" alt="Screenshot 2024-09-17 at 00 03 21" src="https://github.com/user-attachments/assets/425f2065-3dd0-42ce-adae-21314b894957">
+
