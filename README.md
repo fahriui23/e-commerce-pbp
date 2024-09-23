@@ -276,3 +276,206 @@ Pada file urls.py, tambahkan routing url untuk setiap method dalam views.py
 <img width="1512" alt="Screenshot 2024-09-17 at 00 03 15" src="https://github.com/user-attachments/assets/e8d04f1c-d5d2-4518-b064-0f1ac73e8ab1">
 <img width="1512" alt="Screenshot 2024-09-17 at 00 03 21" src="https://github.com/user-attachments/assets/425f2065-3dd0-42ce-adae-21314b894957">
 
+# Tugas 3 PBP - Trias Fahri Naufal
+1. Perbedaan antara HttpResponseRedirect() dan redirect()
+
+HttpResponseRedirect() adalah class bawaan Django yang mengembalikan respons untuk pengalihan halaman secara manual. 
+redirect() adalah shortcut yang lebih mudah digunakan karena menerima argumen seperti URL atau nama view.
+
+2. Cara Kerja Penghubungan Model Product dengan User
+
+Penghubungan dilakukan menggunakan ForeignKey, yang menghubungkan entitas produk dengan pemiliknya (pengguna). Django akan secara otomatis mengelola hubungan ini.
+
+3. Perbedaan antara Autentikasi dan Otorisasi
+
+Autentikasi adalah proses memverifikasi identitas pengguna (misalnya, saat login).
+Sedangkan otorisasi adalah proses menentukan hak akses pengguna setelah terautentikasi.
+Django mengelola autentikasi dengan sistem pengguna bawaan, dan otorisasi diatur dengan group dan permission.
+
+4. Bagaimana Django Mengingat Pengguna yang Telah Login
+
+Django menggunakan sesi (session) yang disimpan dalam cookie untuk mengingat pengguna yang telah login. Cookies bisa digunakan untuk menyimpan data kecil seperti preferensi pengguna.
+
+## Step Pengerjaan
+1. Registrasi:
+Buat form registrasi menggunakan UserCreationForm bawaan Django.
+Implementasikan view untuk registrasi pengguna dan hubungkan ke URL yang sesuai di urls.py.
+
+Berikut kode yang diimplementasikan di file views.py
+
+```
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect
+
+def register(request):
+    form = UserCreationForm()
+
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your account has been successfully created!')
+            return redirect('main:login')
+    context = {'form':form}
+    return render(request, 'register.html', context)
+
+```
+lalu import register ke urls.py dan hubungkan melalui urlpatterns
+
+```
+from main.views import register
+
+urlpatterns = [
+    ...
+    path('register/', register, name='register'),
+    ...
+]
+```
+
+Setelah itu kita harus membuat file register.html yang berfungsi sebagai tempat dilakukannya registrasi
+
+
+
+2. login
+
+Membuat Form Login dengan menggunakan import login
+
+```
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import authenticate, login    
+```
+
+kode diatas merupakan fungsi bawaan dari Django untuk melakukan login dan juga autentikasi apa bila login berhasil
+
+lalu membuat fungsi login_user yang berguna untuk menghandle login dari user
+```
+def login_user(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('main:show_main')
+
+    else:
+        form = AuthenticationForm(request)
+    context = {'form': form}
+    return render(request, 'login.html', context)
+```
+
+login(request, user) berguna untuk melakukan login terlebih dahulu. Apabila berhasil, fungsi ini akan membuat session untuk user tersebut dan juga mengarahkan user ke show_main seperti yang dapat di lihat pada line selanjutnya yaitu redirecting ke main.
+
+lalu hubungkan melalui urls.py dengan menambahkan kode berikut
+
+```
+from main.views import login_user
+
+app_name = 'main'
+
+urlpatterns = [
+    ...
+    path('login/', login_user, name='login'),
+    ...
+]
+```
+
+3. logout
+
+Membuat Form logout dengan menggunakan import logout
+
+```
+from django.contrib.auth import logout
+```
+
+kode diatas merupakan fungsi bawaan dari Django untuk menghandle logout.
+
+lalu membuat fungsi logout_user yang berguna untuk menghandle logout dari user
+```
+from django.contrib.auth import logout
+...
+def logout_user(request):
+    logout(request)
+    response = HttpResponseRedirect(reverse('main:login'))
+    response.delete_cookie('last_login')
+    return response
+```
+
+logout(request) berguna untuk melakukan logout dan menghapus sesi pengguna yang saat ini.
+Lalu diredirect kembali ke main -> login
+
+lalu hubungkan melalui urls.py dengan menambahkan kode berikut
+
+```
+from main.views import logout_user
+
+app_name = 'main'
+
+urlpatterns = [
+    ...
+    path('logout/', logout_user, name='logout'),
+    ...
+]
+```
+
+lalu tambahkan hyperlink tag berikut pada main.html
+
+```
+...
+<a href="{% url 'main:logout' %}">
+  <button>Logout</button>
+</a>
+...
+
+```
+
+3. Menghubungkan model Product dan User
+
+Pada models.py, tambahkan import berikut:
+```
+from django.contrib.auth.models import User
+```
+
+lalu pada class Product tambahkan kode berikut:
+```
+class MoodEntry(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    ...
+```
+
+kode diatas menghubungkan suatu product dengan user melalui suatu relationship, hal ini memastikan bahwa sebuah product pasti terhubung kepada seorang user
+
+selanjutnya pada views.py, ubah kode untuk membuat product dengan berikut:
+```
+def create_product(request):
+    form = ProductForm(request.POST or None)
+
+    if form.is_valid() and request.method == "POST":
+        product = form.save(commit=False)
+        product.user = request.user
+        form.save()
+        return redirect('main:show_main')
+
+    context = {'form': form}
+    return render(request, "create_product.html", context)
+
+```
+
+kode bagian commit=False memastikan bahwa Django tidak langsung menyimpan objek yang sudah dibuat langsung ke database, hal ini menyebabkan kita dapat meng-alter dahulu objek yang akan di simpan.
+Pada konteks ini kita akan mengisi field user dengan user yang sedang login sekarang.
+
+Lalu pada show_main, ubah context field user menjadi user yang sedang login sekarang dengan mengubah kode menjadi seperti ini:
+```
+context = {
+         'name': request.user.username,
+         ...
+    }
+```
+
+jangan lupa juga bahwa kita harus melakukan filter terhadap product yang dimunculkan hanyalah product milik user tersebut secara eksklusif. Pada show_main ubah kode menjadi berikut:
+```
+def show_main(request):
+    mood_entries = MoodEntry.objects.filter(user=request.user)
+    ...
+```
+
