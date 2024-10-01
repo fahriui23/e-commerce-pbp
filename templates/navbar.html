@@ -10,7 +10,7 @@
           {% if user.is_authenticated %}
             <span class="text-gray-300 mr-6">Welcome, {{ user.username }}</span>
             <a href="{% url 'main:logout' %}" class="text-center bg-[#A23037] hover:scale-110 text-white font-bold py-2 px-4 rounded transition duration-300">
-              <image src="{% static 'image/logout.png' %}" class="w-5 h-5" alt="Logout" />
+              <image src="{% static 'image/logout.png' %}" class="w-5 h-5" />
             </a>
           {% else %}
             <a href="{% url 'main:login' %}" class="text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300 mr-2">
@@ -34,10 +34,13 @@
     <div class="mobile-menu hidden md:hidden  px-4 w-full md:max-w-full">
       <div class="pt-2 pb-3 space-y-1 mx-auto">
         {% if user.is_authenticated %}
-          <span class="block text-gray-300 px-3 py-2">Welcome, {{ user.username }}</span>
-          <a href="{% url 'main:logout' %}" class="block text-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300">
-            Logout
-          </a>
+            <div class="flex items-center justify-between">
+            <span class="text-white">Welcome,<b> {{ user.username }} </b></span>
+            <a href="{% url 'main:logout' %}" class="h-full w-10 bg-[#A23037] hover:bg-[#8B1E24] text-white font-bold py-2 px-2 rounded transition duration-300 flex items-center justify-center">
+              <image src="{% static 'image/logout.png' %}" class="w-5 h-5 flex items-center justify-center" />
+            </a>
+            </div>
+          
         {% else %}
           <a href="{% url 'main:login' %}" class="block text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300 mb-2">
             Login
