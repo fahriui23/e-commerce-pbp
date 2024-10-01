@@ -88,10 +88,10 @@ def logout_user(request):
     return response
 
 def edit_product(request, id):
-    # Get mood entry berdasarkan id
+    # Get Product berdasarkan id
     product = Product.objects.get(pk = id)
 
-    # Set mood entry sebagai instance dari form
+    # Set product entry sebagai instance dari form
     form = ProductForm(request.POST or None, instance=product)
 
     if form.is_valid() and request.method == "POST":
