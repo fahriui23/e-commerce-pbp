@@ -276,7 +276,7 @@ Pada file urls.py, tambahkan routing url untuk setiap method dalam views.py
 <img width="1512" alt="Screenshot 2024-09-17 at 00 03 15" src="https://github.com/user-attachments/assets/e8d04f1c-d5d2-4518-b064-0f1ac73e8ab1">
 <img width="1512" alt="Screenshot 2024-09-17 at 00 03 21" src="https://github.com/user-attachments/assets/425f2065-3dd0-42ce-adae-21314b894957">
 
-# Tugas 3 PBP - Trias Fahri Naufal
+# Tugas 4 PBP - Trias Fahri Naufal
 1. Perbedaan antara HttpResponseRedirect() dan redirect()
 
 HttpResponseRedirect() adalah class bawaan Django yang mengembalikan respons untuk pengalihan halaman secara manual. 
@@ -478,4 +478,20 @@ def show_main(request):
     mood_entries = MoodEntry.objects.filter(user=request.user)
     ...
 ```
+# Tugas 5 PBP - Trias Fahri Naufal
 
+1. Berikut ini urutan prioritasnya, nomor 1 yang memiliki prioritas paling tinggi, yaitu :
+
+    1. Inline style
+    2. External dan internal style sheets
+    3. Browser default
+
+2. Responsiveness menjadi salah satu aspek penting dalam design web dan aplikasi dengan alasan aksesibilitas. Sebuah web apabila tidak responsive maka tidak akan mudah, bahkan belum tentu dapat digunakan pada beberapa device yang berbeda, terutama pada platform mobile. Salah satu contoh web yang sudah responsive yaitu SIAKNG Universitas Indonesia. Di lain sisi, kebanyakan web adalah web yang responsive, namun terdapat suatu web yang diciptakan dengan sengaja non-responsive untuk contoh saja, yaitu: https://dequeuniversity.com/library/responsive/1-non-responsive.
+
+3. 
+    Padding adalah jarak antara konten suatu elemen dengan bordernya.
+    Border merupakan garis pembatas dari suatu elemen, berada diantara elemen dan margin.
+    Margin adalah ruang di luar border elemen dengan fungsi untuk memberikan jarak antar elemen.
+
+    contoh:
+    
