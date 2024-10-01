@@ -493,5 +493,85 @@ def show_main(request):
     Border merupakan garis pembatas dari suatu elemen, berada diantara elemen dan margin.
     Margin adalah ruang di luar border elemen dengan fungsi untuk memberikan jarak antar elemen.
 
-    contoh:
+    contoh: <img width="724" alt="Screenshot 2024-10-01 at 18 25 58" src="https://github.com/user-attachments/assets/0e28ea0b-628a-47ae-94ea-3ad7c1bd0b24">
+
+4. Flexbox adalah metode layout satu dimensi yang dirancang untuk mendistribusikan ruang di sepanjang satu sumbu utama, baik itu horizontal atau vertikal. Flexbox terdiri dari container dan itemsnya. Sedangkan grid merupakan metode layout dua dimensi (baris dan kolom). Perbedaan utama antara flexbox dan grid adalah dimensinya.
+
+##Implementasi Checklist
+1. Untuk implementasi Fitur edit dan delete product saya membuat dua function di views.py
+   
+```
+def edit_product(request, id):
+ # Get Product berdasarkan id
+ product = Product.objects.get(pk = id)
+
+ # Set product entry sebagai instance dari form
+ form = ProductForm(request.POST or None, instance=product)
+
+ if form.is_valid() and request.method == "POST":
+     # Simpan form dan kembali ke halaman awal
+     form.save()
+     return HttpResponseRedirect(reverse('main:show_main'))
+
+ context = {'form': form}
+ return render(request, "edit_product.html", context)
+
+def delete_product(request, id):
+    # Get product berdasarkan id
+    product = Product.objects.get(pk = id)
+    product.delete()
+    # Kembali ke halaman awal
+    return HttpResponseRedirect(reverse('main:show_main'))
+```
+
+2. Sebelum membuat template untuk view tersebut, hubgungkan terlebih dahulu framework yang digunakan yaitu tailwind dengan menghubungkan CDN Tailwind CSS pada base.html pada templates.
+
+```
+...
+<script src="https://cdn.tailwindcss.com">
+</script>
+...
+```
+
+3. Kemudian buat template untuk edit product dengan membuat sebuah file pada direktori main/templates dengan nama edit_product.html. Styling bisa secara langsung diimplementasikan pada file tersebut.
+
+4. Jangan lupa untuk melakukan routing terhadap website melalui urls.py
+   
+```
+...
+    path('edit-product/<uuid:id>', edit_product, name='edit_product'),
+    path('delete/<uuid:id>', delete_product, name='delete_product'),
+...
+```
+
+5. Supaya dapat menggunakan CSS global dan juga image di dalam styling-nya, buat folder static pada root dan memiliki subdirektori image dan css.
+
+6. Setelah itu, saya mengkonfigurasi file settings.py dengan menambahkan baris ini pada settings.py:
+
+```
+   ...
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', #Tambahkan dibawah SecurityMiddleware
+    ...
+]
+
+...
+STATIC_URL = '/static/'
+if DEBUG:
+    STATICFILES_DIRS = [
+        BASE_DIR / 'static' # mengarahkan ke /static root project pada mode development
+    ]
+else:
+    STATIC_ROOT = BASE_DIR / 'static' # mengarahkan ke /static root project pada mode production
+...
+```
+
+7. Tambahkan file global.css pada /static/css dan styling yang perlu diubah.
+8. Untuk dapat mengimplementasi file yang ada di /static gunakan {% load static %}.
+9. 
+  
+
+
+
     
