@@ -533,7 +533,7 @@ def delete_product(request, id):
 ...
 ```
 
-3. Kemudian buat template untuk edit product dengan membuat sebuah file pada direktori main/templates dengan nama edit_product.html. Styling bisa secara langsung diimplementasikan pada file tersebut.
+3. Kemudian buat template untuk edit product dengan membuat sebuah file pada direktori `main/templates` dengan nama edit_product.html. Styling bisa secara langsung diimplementasikan pada file tersebut.
 
 4. Jangan lupa untuk melakukan routing terhadap website melalui urls.py
    
@@ -568,8 +568,9 @@ else:
 ```
 
 7. Tambahkan file global.css pada /static/css dan styling yang perlu diubah.
-8. Untuk dapat mengimplementasi file yang ada di /static gunakan {% load static %}.
-9. 
+8. Untuk dapat mengimplementasi file yang ada di /static gunakan `{% load static %}`.
+9. Untuk faktor convinience, suatu komponen yang ada di beberapa page seperti navigation bar dan card, saya menggunakan template terpisah. Implementasi template tersebut bisa dengan ` {% include navbar %} ` untuk navbar, begitu juga untuk file lain. navbar.html disimapn pada `root/templates`, sedangkan `card_info.html` dan `card_product.html` disimpan pada `main/templates`.
+10. Untuk proses styling sendiri dapat dilakukan pada file html masing masing page dengan mengutiliasikan framework TailwindCSS.
   
 
 
