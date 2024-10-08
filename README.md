@@ -1,4 +1,5 @@
-# Tugas 2 PBP - Trias Fahri Naufal
+<details>
+<summary># Tugas 2 PBP - Trias Fahri Naufal</summary>
 
 Markdown ini dibuat untuk memenuhi Tugas 2 PBP dengan nama aplikasi "Wanda Beras". <br />
 Link Deployment PWS : http://trias-fahri-wandaberas.pbp.cs.ui.ac.id
@@ -176,8 +177,9 @@ Sekian jawaban saya :) . <br />
 Salam <br/>
 
 Trias Fahri Naufal 
-
-# Tugas 3 PBP - Trias Fahri Naufal
+</details>
+<details>
+<summary># Tugas 3 PBP - Trias Fahri Naufal</summary>
 
 1. Mengapa kita membutuhkan Data Delivery? 
 
@@ -276,7 +278,10 @@ Pada file urls.py, tambahkan routing url untuk setiap method dalam views.py
 <img width="1512" alt="Screenshot 2024-09-17 at 00 03 15" src="https://github.com/user-attachments/assets/e8d04f1c-d5d2-4518-b064-0f1ac73e8ab1">
 <img width="1512" alt="Screenshot 2024-09-17 at 00 03 21" src="https://github.com/user-attachments/assets/425f2065-3dd0-42ce-adae-21314b894957">
 
-# Tugas 4 PBP - Trias Fahri Naufal
+</details>
+
+<details>
+<summary># Tugas 4 PBP - Trias Fahri Naufal</summary>
 1. Perbedaan antara HttpResponseRedirect() dan redirect()
 
 HttpResponseRedirect() adalah class bawaan Django yang mengembalikan respons untuk pengalihan halaman secara manual. 
@@ -478,7 +483,10 @@ def show_main(request):
     mood_entries = MoodEntry.objects.filter(user=request.user)
     ...
 ```
-# Tugas 5 PBP - Trias Fahri Naufal
+</details>
+
+<details>
+<summary># Tugas 5 PBP - Trias Fahri Naufal</summary>
 
 1. Berikut ini urutan prioritasnya, nomor 1 yang memiliki prioritas paling tinggi, yaitu :
 
@@ -571,8 +579,159 @@ else:
 8. Untuk dapat mengimplementasi file yang ada di /static gunakan `{% load static %}`.
 9. Untuk faktor convinience, suatu komponen yang ada di beberapa page seperti navigation bar dan card, saya menggunakan template terpisah. Implementasi template tersebut bisa dengan ` {% include navbar %} ` untuk navbar, begitu juga untuk file lain. navbar.html disimapn pada `root/templates`, sedangkan `card_info.html` dan `card_product.html` disimpan pada `main/templates`.
 10. Untuk proses styling sendiri dapat dilakukan pada file html masing masing page dengan mengutiliasikan framework TailwindCSS.
-  
 
+</details>
 
+<details>
+<summary> #Tugas 6 PBP - Trias Fahri Naufal</summary>
+
+1. Manfaat Penggunaan JavaScript dalam Pengembangan Aplikasi Web
+
+JavaScript memiliki beberapa kemampuan penting dalam pengembangan web, seperti:
+
+<strong>a. Membuat interaksi dinamis: </strong>
+JavaScript memungkinkan halaman web merespons secara dinamis terhadap aksi pengguna atau input data secara asinkronus (tanpa harus me-refresh seluruh halaman).
+
+<strong>b. Pemrosesan di sisi klien: </strong>
+Dengan JavaScript, sebagian proses komputasi dapat dilakukan di browser pengguna, mengurangi beban server dan mempercepat respons terhadap interaksi.
+
+<strong>c. Integrasi dengan API: </strong>
+JavaScript memudahkan pengambilan data dari server secara asynchronous (tanpa harus memuat ulang halaman) menggunakan teknologi seperti AJAX atau fetch() API.
+
+<strong>d. Kemampuan lintas platform: </strong>
+JavaScript bekerja hampir di semua browser modern, yang berarti aplikasi web adaptable dan dapat berjalan di berbagai perangkat tanpa perlu modifikasi besar.
+
+2. Fungsi Penggunaan `await` Ketika Menggunakan `fetch()`
+
+await digunakan untuk menahan eksekusi fungsi async dengan menunggu sampai promise yang dihasilkan oleh fetch() terselesaikan. Dengan kata lain, await memastikan bahwa kode berikutnya tidak dijalankan sampai data telah direturn. 
+
+Tanpa await, fungsi fetch() akan mengembalikan promise yang belum selesai, sehingga kita tidak mendapatkan data yang diinginkan tepat waktu. Ini akan menghasilkan hasil yang tidak diinginkan atau error.
+
+3. Mengapa Perlu Menggunakan Decorator csrf_exempt pada View untuk AJAX POST?
+
+Decorator csrf_exempt digunakan untuk menonaktifkan perlindungan CSRF (Cross-Site Request Forgery) pada view tersebut. Secara default django menggunakan middleware CSRF sebagai bentuk perlindungna. Tujuan decorator ini untuk membypass pemeriksaan CSRF tersebut.
+
+4. Mengapa Pembersihan Data Input Dilakukan di Backend dan Bukan di Frontend Saja?
+
+Pembersihan di kedua belah sisi (front and back-end) berfungsi untuk memastikan keamanan data. Jika hanya dilakukan pada front-end, user dengan intensi buruk dapat menghindari validasi pada sisi client. Untuk menghindari agar platform tidak vulnarable terhadap serangan seperti SQL Injection maupun Cross-Site Scripting, kita melakukan validasi data dalam bentuk sanitasi.
+
+5. Cara Mengimplementasikan Checklist secara Step-by-Step
+
+    1. Refresh Product Cards dengan metode AJAX GET
+
+    Pada `main/templates/main.html` , buat suatu function JS utnuk fetch data JSON secara asynchronus
+
+    ```
+    async function getProducts(){
+      return fetch("{% url 'main:show_json' %}").then((res) => res.json())
+    }
+    ```
+
+    lalu pada main.html buat perubahan supaya mendukung show product dengan menggunakan AJAX
+
+    ```
+    async function refreshProduct() {
+    document.getElementById("product_cards").innerHTML = "";
+    document.getElementById("product_cards").className = "";
+    const productEntries = await getProducts();
+    let htmlString = "";
+    let classNameString = "";
+
+    if (productEntries.length === 0) {
+        # design interface kalau product kosong
+    }
+    else {
+        #design interface dengan product yang ada
+    }
+    document.getElementById("product_cards").className = classNameString;
+    document.getElementById("product_cards").innerHTML = htmlString;
+    }
+    ```
+    Pada function getProducts, kita melakukan fetch ke json. untuk memastikan data yang diambil hanya milik user tersebut, gunakan filter pada views.py 
+
+    ```
+    def show_json(request):
+    data = Product.objects.filter(user=request.user)
+    ...
+    ```
+
+    2. AJAX POST untuk Menambahkan Product Baru
+    a. buat tombol untuk membuka modal dengan form untuk menambahkan product 
+
+    tambahkan potongan kode berikut ke main.html
+
+    ```
+    <button data-modal-target="crudModal onclick="showModal();">
+        Add New Product by AJAX
+      </button>
+    ```
+
+    onclick showModal memungkinkan kita untuk show modal dengan klik tombol tersebut.
+
+    b. buat view baru untuk menambah product ke database
+
+    tambahkan potongan kode berikut
+    ```
+    @csrf_exempt
+    @require_POST
+    def create_product_ajax(request):
+        name = strip_tags(request.POST.get("name"))
+        description = strip_tags(request.POST.get("description"))
+        price = request.POST.get("price")
+        user = request.user
+
+        new_product = Product(
+            name=name, 
+            description=description, 
+            price=price, 
+            user=user
+        )
+        new_product.save()
+        return HttpResponse(b"CREATED", status=201)
+    ```
+
+    gunakan juga strip tags untuk menghilangkan tags html sebagai salah satu mekanisme pertahanan terhadap XSS
+
+    c. Buatlah path /create-ajax/ yang mengarah ke fungsi view yang baru kamu buat.
+
+    tambahkan kode berikut pada urls.py
+
+    ```
+    path('create-product-ajax', create_product_ajax name='create_product_ajax'),
+    ```
+
+    kode berikut membuat path create-product-ajax dan menghubungkan ke function create_product_ajax tadi di views.py
+
+    d. Lakukan refresh pada halaman utama secara asinkronus untuk menampilkan daftar mood terbaru tanpa reload halaman utama secara keseluruhan
+
+    Buatlah function JS berikut
+
+    ```
+    async function refreshProduct() {
+    document.getElementById("product_cards").innerHTML = "";
+    document.getElementById("product_cards").className = "";
+    const productEntries = await getProducts();
+    let htmlString = "";
+    let classNameString = "";
+
+    if (productEntries.length === 0) {
+        classNameString = "flex flex-col items-center justify-center min-h-[24rem] p-6";
+        htmlString = 
+        # design interface kalau product kosong
+        
+    }
+    else {
+        productEntries.forEach((item) => {
+          const name = DOMPurify.sanitize(item.fields.name);
+          const description = DOMPurify.sanitize(item.fields.description);
+            htmlString += #design interface dengan product yang ada 
+    }
+    document.getElementById("product_cards").className = classNameString;
+    document.getElementById("product_cards").innerHTML = htmlString;
+    }
+    ```
+
+    kita melakukan refresh secara asinkronus dan show cards sesuai dengan data yang ada melalui htmlString tersebut dengan bantuan HTML DOM (Document Object Model)
+</details>
 
     

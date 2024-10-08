@@ -29,7 +29,8 @@
                     {% endfor %}
                 </div>
             {% endfor %}
-            <div class="flex justify-center mt-6">
+            <div class="flex justify-center mt-6 space-x-6">
+                <button type="button" class="bg-[#d0b15d] hover:bg-[#b89c4a] text-white font-bold py-2 px-2 rounded-lg" id="cancelButton" onclick="window.location.href='{% url 'main:show_main' %}'">Cancel</button>
                 <button type="submit" class="bg-[#A23037] text-white font-semibold px-6 py-3 rounded-lg hover:bg-[#7A1E1F] transition duration-300 ease-in-out w-full">
                     Add Product
                 </button>
