@@ -9,14 +9,15 @@ from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required
 import datetime
 from django.urls import reverse
-from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
 from django.utils.html import strip_tags
+import json
+from django.http import JsonResponse
 
 @login_required(login_url='/login')
 def show_main(request):
     default_last_login = request.COOKIES['last_login'] if 'last_login' in request.COOKIES else 'Never logged in'
-    
     context = {
         'npm' : '2306212096',
         'name': request.user.username,
@@ -61,6 +62,7 @@ def show_xml(request):
 
 def show_json(request):
     data = Product.objects.filter(user=request.user)
+    print(data.values())
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 def show_xml_by_id(request, id):
@@ -86,7 +88,6 @@ def register(request):
 def login_user(request):
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
-
         if form.is_valid():
             user = form.get_user()
             login(request, user)
@@ -128,4 +129,22 @@ def delete_product(request, id):
     product.delete()
     # Kembali ke halaman awal
     return HttpResponseRedirect(reverse('main:show_main'))
+
+@csrf_exempt
+def create_product_flutter(request):
+    if request.method == 'POST':
+
+        data = json.loads(request.body)
+        new_product = Product.objects.create(
+            user=request.user,
+            name=data["name"],
+            price=int(data["price"]),
+            description=data["description"]
+        )
+
+        new_product.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
 
